@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -16,11 +16,16 @@ const links = [
 ];
 
 export default function NavBar() {
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <header className="w-full bg-gray-800">
-      <div className="container m-auto py-4 flex justify-between items-center">
+      <div className="container mx-auto py-4 flex justify-between items-center">
         <Link href="/">
           <Image
             src="/chopin_w.png"
@@ -31,13 +36,45 @@ export default function NavBar() {
           />
         </Link>
 
-        <nav className="flex justify-between gap-4">
+        <button
+          onClick={toggleMenu}
+          className="block md:hidden text-gray-300 hover:text-white focus:text-white focus:outline-none"
+        >
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            {isOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            )}
+          </svg>
+        </button>
+
+        <nav
+          className={`${
+            isOpen ? "block" : "hidden"
+          } md:block md:flex md:items-center md:w-auto`}
+        >
           {links.map((link) => (
             <Link
               className={
                 pathname === link.href
-                  ? "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-                  : "text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                  ? "block md:inline-block mt-4 md:mt-0 md:ml-6 text-white font-medium"
+                  : "block md:inline-block mt-4 md:mt-0 md:ml-6 text-gray-300 hover:text-white font-medium"
               }
               key={link.href}
               href={link.href}
