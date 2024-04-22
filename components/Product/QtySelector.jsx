@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import Counter from "../ui/Counter";
-import Boton from "../ui/Boton";
+import Counter from "@/components/UI/Counter";
+import Boton from "@/components/UI/Boton";
 import { useCartContext } from "@/components/context/CartContext";
 
 import Link from "next/link";
