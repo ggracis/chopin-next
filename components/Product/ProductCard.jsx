@@ -7,17 +7,16 @@ export default function ProductCard({ item }) {
       <Link href={`/producto/${item.slug}`}>
         <Image
           src={item.image}
-          alt={item.name}
+          alt={item.title}
           width={300}
           height={300}
           className="w-full h-48 object-contain"
         />
         <div className="p-4">
-          <h3 className="text-gray-900 font-semibold text-lg">{item.name}</h3>
-          <p className="text-gray-900 font-semibold mt-2">${item.price}</p>
-          <button className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md">
-            Agregar al carrito
-          </button>
+          <h3 className="text-gray-900 font-semibold text-lg">{item.title}</h3>
+          <p className="text-blue-500 text-3xl font-heading font-medium">
+            ${item.price}
+          </p>
         </div>
       </Link>
     </article>

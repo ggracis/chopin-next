@@ -1,11 +1,12 @@
-import { mockData } from "@/data/products";
 import ProductCard from "./ProductCard";
 
-export default function ProductList({ categoria }) {
-  const items =
-    categoria === "todos"
-      ? mockData
-      : mockData.filter((item) => item.category === categoria);
+const ProductsList = async ({ categoria }) => {
+  const items = await fetch(
+    `http://localhost:3000/api/productos/${categoria}`,
+    {
+      cache: "force-cache",
+    }
+  ).then((r) => r.json());
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -14,4 +15,5 @@ export default function ProductList({ categoria }) {
       ))}
     </section>
   );
-}
+};
+export default ProductsList;

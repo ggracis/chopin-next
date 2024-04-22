@@ -1,8 +1,11 @@
-import { mockData } from "@/data/products";
+// components/Product/ProductDetail.jsx
 import Image from "next/image";
+import QtySelector from "./QtySelector";
 
-const ProductDetail = ({ slug }) => {
-  const item = mockData.find((item) => item.slug === slug);
+const ProductDetail = async ({ slug }) => {
+  const item = await fetch(`http://localhost:3000/api/product/${slug}`, {
+    cache: "no-store",
+  }).then((res) => res.json());
 
   return (
     <article className="bg-white shadow-md rounded-md overflow-hidden flex flex-col md:flex-row mx-auto">
@@ -10,7 +13,7 @@ const ProductDetail = ({ slug }) => {
         <div className="w-full h-full max-w-sm mx-auto">
           <Image
             src={item.image}
-            alt={item.name}
+            alt={item.title}
             layout="responsive"
             width={1000}
             height={1000}
@@ -19,12 +22,13 @@ const ProductDetail = ({ slug }) => {
         </div>
       </div>
       <div className="p-4 md:w-1/2 flex flex-col justify-center">
-        <h3 className="text-gray-900 font-semibold text-lg">{item.name}</h3>
+        <h3 className="text-gray-900 font-semibold text-lg">{item.title}</h3>
+
         <p className="text-gray-500 mt-2">{item.description}</p>
-        <p className="text-gray-900 font-semibold mt-2">${item.price}</p>
-        <button className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md">
-          Agregar al carrito
-        </button>
+        <p className="text-blue-500 text-3xl font-heading font-medium">
+          ${item.price}
+        </p>
+        <QtySelector item={item} />
       </div>
     </article>
   );

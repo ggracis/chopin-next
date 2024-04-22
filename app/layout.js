@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./styles/globals.css";
 import NavBar from "@/components/UI/Navbar";
 import Footer from "@/components/UI/Footer";
+import { CartProvider } from "@/components/context/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +20,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body>
-        <div class="flex flex-col h-screen justify-between">
-          <NavBar />
-
-          {children}
-          <Footer />
-        </div>
+        <CartProvider>
+          <div className="flex flex-col h-screen justify-between">
+            <NavBar />
+            {children}
+            <Footer />
+          </div>
+        </CartProvider>
       </body>
     </html>
   );

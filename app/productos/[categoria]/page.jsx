@@ -1,4 +1,5 @@
 import ProductList from "@/components/Product/ProductList";
+import { Suspense } from "react";
 
 export async function generateMetadata({ params, searchParams }, parent) {
   return {
@@ -6,12 +7,26 @@ export async function generateMetadata({ params, searchParams }, parent) {
   };
 }
 
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return [
+    { categoria: "todos" },
+    { categoria: "herramientas" },
+    { categoria: "deportes" },
+    { categoria: "moda" },
+    { categoria: "salud" },
+  ];
+}
+
 const Categoria = ({ params }) => {
   const { categoria } = params;
   return (
     <main className="mb-auto flex flex-col justify-between p-10">
       <h1>Categoria {categoria}</h1>
-      <ProductList categoria={categoria} />
+      <Suspense fallback={<p>Cargando...</p>}>
+        <ProductList categoria={categoria} />
+      </Suspense>
     </main>
   );
 };
