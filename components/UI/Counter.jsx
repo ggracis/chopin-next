@@ -7,6 +7,7 @@ const Counter = ({ counter, setCounter, max }) => {
 
   return (
     <div className="flex items-center gap-3">
+      <p className="text-black text-lg"> Unidades:</p>
       <Boton onClick={decrease} className="active:bg-blue-600 text-xl	">
         -
       </Boton>

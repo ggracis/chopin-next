@@ -2,12 +2,20 @@ import Boton from "@/components/UI/Boton";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useCartContext } from "@/context/CartContext";
+import { useState } from "react";
+import CounterMini from "../UI/CounterMini";
 
 const CartItem = ({ item }) => {
-  const { removeFromCart } = useCartContext();
+  const { removeFromCart, updateCartItem } = useCartContext();
+  const [quantity, setQuantity] = useState(item.quantity);
 
   const handleRemoveFromCart = () => {
     removeFromCart(item.slug);
+  };
+
+  const handleQuantityChange = (newQuantity) => {
+    setQuantity(newQuantity);
+    updateCartItem(item.slug, newQuantity - item.quantity);
   };
 
   return (
@@ -20,16 +28,17 @@ const CartItem = ({ item }) => {
         height={40}
       />
 
-      <div>
-        <p className="text-sm">
-          <h3 className="font-semibold">{item.title}</h3>
-          {Number(item.price * item.quantity).toLocaleString("es-AR", {
-            style: "currency",
-            currency: "ARS",
-          })}
-          <br />
-          <span>Cantidad: {item.quantity}</span>
-        </p>
+      <div className="text-sm">
+        <p className="font-semibold">{item.title}</p>
+        {Number(item.price * quantity).toLocaleString("es-AR", {
+          style: "currency",
+          currency: "ARS",
+        })}
+        <CounterMini
+          max={item.stock}
+          counter={quantity}
+          setCounter={handleQuantityChange}
+        />
       </div>
 
       <Boton

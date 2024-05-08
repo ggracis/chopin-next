@@ -6,7 +6,8 @@ export default function Admin() {
   return (
     <AdminLayout>
       <main className="mb-auto flex flex-col justify-between p-10">
-        <h1 className="text-3xl font-bold">Admin</h1>
+        <h1 className="text-3xl font-bold">Admin panel</h1>
+        <hr />
         <hr />
         <Link
           href={`/admin/create`}
@@ -14,7 +15,7 @@ export default function Admin() {
         >
           Crear producto
         </Link>
-        <hr />
+        <h2 className="text-2xl font-bold">Productos</h2>
         <ProductsTable />
       </main>
     </AdminLayout>

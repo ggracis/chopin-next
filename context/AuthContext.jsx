@@ -32,23 +32,26 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const signUp = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signUp = async (email, password) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log("Registro exitoso");
+    } catch (error) {
+      throw error;
+    }
   };
 
   const logIn = async (email, password) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Verificar si el usuario está autenticado
       const user = auth.currentUser;
       if (user) {
-        // Redirigir a /admin si el usuario está autenticado
         window.location.href = "/admin";
       } else {
-        console.log("Error de autenticación");
+        throw new Error("Error de autenticación");
       }
     } catch (error) {
-      console.log(error.message);
+      throw error;
     }
   };
 

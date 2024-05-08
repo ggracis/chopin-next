@@ -4,25 +4,47 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import CartBtn from "./CartBtn";
-
-const links = [
-  { label: "Inicio", href: "/" },
-  { label: "Herramientas", href: "/productos/herramientas" },
-  { label: "Deportes y fitness", href: "/productos/deportes" },
-  { label: "Moda", href: "/productos/moda" },
-  { label: "Salud y belleza", href: "/productos/salud" },
-  { label: "Carrito", href: "/carrito" },
-  { label: "Admin", href: "/admin" },
-  { label: "Contacto", href: "/contacto" },
-];
+import {
+  UserIcon,
+  ArrowRightEndOnRectangleIcon,
+  ShoppingBagIcon,
+} from "@heroicons/react/24/solid";
+import { useAuthContext } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function NavBar() {
+  const { user, logOut } = useAuthContext();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      router.push("/");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const links = [
+    { label: "Inicio", href: "/" },
+    { label: "Herramientas", href: "/productos/herramientas" },
+    { label: "Deportes y fitness", href: "/productos/deportes" },
+    { label: "Moda", href: "/productos/moda" },
+    { label: "Salud y belleza", href: "/productos/salud" },
+    { label: "Contacto", href: "/contacto" },
+    {
+      label: "Admin",
+      href: "/admin",
+      icon: <UserIcon className="h-5 w-5" />,
+    },
+  ];
 
   return (
     <header className="w-full bg-gray-800">
@@ -72,18 +94,41 @@ export default function NavBar() {
         >
           {links.map((link) => (
             <Link
-              className={
-                pathname === link.href
-                  ? "block md:inline-block mt-4 md:mt-0 md:ml-6 text-white font-medium"
-                  : "block md:inline-block mt-4 md:mt-0 md:ml-6 text-gray-300 hover:text-white font-medium"
-              }
-              key={link.href}
+              key={link.label}
               href={link.href}
+              onClick={link.onClick}
+              className={`flex items-center gap-2 mx-1 px-3 py-2 rounded-md text-sm font-medium ${
+                pathname === link.href
+                  ? "bg-gray-100 text-blue-700"
+                  : "text-gray-300 hover:bg-gray-700 hover:text-white"
+              }`}
             >
+              {link.icon}
               {link.label}
             </Link>
           ))}
           <CartBtn />
+
+          {user && (
+            <Link
+              href="/"
+              onClick={handleLogout}
+              className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white`}
+            >
+              <ArrowRightEndOnRectangleIcon className="h-5 w-5" />
+              Cerrar sesión
+            </Link>
+          )}
+          {user && (
+            <Link
+              href="/admin/pedidos"
+              onClick={handleLogout}
+              className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white`}
+            >
+              <ShoppingBagIcon className="h-5 w-5" />
+              Pedidos
+            </Link>
+          )}
         </nav>
       </div>
     </header>
