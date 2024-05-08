@@ -37,3 +37,4 @@ next-env.d.ts
 
 /data/updateProductSlugs.js
 /data/serviceAccountKey.json
+.vercel

@@ -3,7 +3,10 @@ import Link from "next/link";
 
 export default function ProductCard({ item }) {
   return (
-    <article className="bg-white shadow-md rounded-md overflow-hidden">
+    <article
+      key={item.slug}
+      className="bg-white shadow-md rounded-md overflow-hidden"
+    >
       <Link href={`/producto/${item.slug}`}>
         <Image
           src={item.image}
