@@ -1,11 +1,12 @@
-// components/auth/LoginForm.jsx
 "use client";
 import React, { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import Boton from "../UI/Boton";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
-  const { logIn, signUp } = useAuthContext();
+  const { logIn } = useAuthContext();
+  const router = useRouter();
 
   const [values, setValues] = useState({
     email: "",
@@ -20,13 +21,10 @@ const LoginForm = () => {
   };
 
   const handleLogin = async (e) => {
-    console.log("Login");
     e.preventDefault();
     try {
-      console.log("Login attempt");
       await logIn(values.email, values.password);
-      window.location.href = "/admin";
-      console.log("Login successful");
+      router.push("/admin");
     } catch (error) {
       console.log(error.message);
     }
@@ -61,7 +59,7 @@ const LoginForm = () => {
           </div>
           <div className="flex justify-between">
             <Boton type="submit">Iniciar sesión</Boton>
-            <Boton onClick={() => signUp(values)}>Registrarse</Boton>
+            <Boton>Registrarse</Boton>
           </div>
         </form>
       </div>
