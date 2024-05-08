@@ -2,45 +2,38 @@
 import { useState } from "react";
 import Counter from "@/components/UI/Counter";
 import Boton from "@/components/UI/Boton";
-import { useCartContext } from "@/components/context/CartContext";
-
-import Link from "next/link";
+import { useCartContext } from "@/context/CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const QtySelector = ({ item }) => {
-  const { addToCart, isInCart } = useCartContext();
+  const { addToCart, isInCart, updateCartItem } = useCartContext();
   const [quantity, setQuantity] = useState(1);
 
   const handleAdd = () => {
-    addToCart({
-      ...item,
-      quantity,
+    isInCart(item.slug)
+      ? updateCartItem(item.slug, quantity)
+      : addToCart({
+          ...item,
+          quantity,
+        });
+    toast.success("Producto agregado!", {
+      draggable: true,
+      position: "bottom-center",
     });
   };
 
   return (
     <div className="flex flex-col gap-5 mt-6">
-      {isInCart(item.slug) ? (
-        <Link
-          href={"/carrito"}
-          className="rounded-lg py-2 px-4 bg-blue-800 text-white text-center"
-        >
-          Terminar mi compra
-        </Link>
-      ) : (
-        <>
-          <Counter
-            max={item.stock}
-            counter={quantity}
-            setCounter={setQuantity}
-          />
-          <Boton
-            className="w-full hover:bg-blue-500 text-center	"
-            onClick={handleAdd}
-          >
-            Agregar al carrito
-          </Boton>
-        </>
-      )}
+      <ToastContainer />
+
+      <Counter max={item.stock} counter={quantity} setCounter={setQuantity} />
+      <Boton
+        className="w-full hover:bg-blue-500 text-center	"
+        onClick={handleAdd}
+      >
+        Agregar al carrito
+      </Boton>
     </div>
   );
 };

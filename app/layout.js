@@ -2,7 +2,9 @@ import { Inter } from "next/font/google";
 import "./styles/globals.css";
 import NavBar from "@/components/UI/Navbar";
 import Footer from "@/components/UI/Footer";
-import { CartProvider } from "@/components/context/CartContext";
+import { CartProvider } from "@/context/CartContext";
+import CartWidget from "@/components/UI/CartWidget";
+import { AuthProvider } from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,13 +22,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body>
-        <CartProvider>
-          <div className="flex flex-col h-screen justify-between">
-            <NavBar />
-            {children}
-            <Footer />
-          </div>
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <div className="flex flex-col h-screen justify-between">
+              <NavBar />
+              {children}
+              <CartWidget />
+              <Footer />
+            </div>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

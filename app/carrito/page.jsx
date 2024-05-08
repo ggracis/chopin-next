@@ -1,6 +1,6 @@
 "use client";
 import CartItem from "@/components/cart/CartItem";
-import { useCartContext } from "@/components/context/CartContext";
+import { useCartContext } from "@/context/CartContext";
 
 const Carrito = () => {
   const { cart } = useCartContext();

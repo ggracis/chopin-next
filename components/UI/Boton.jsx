@@ -1,7 +1,7 @@
 const Boton = ({ children, className = "", ...args }) => {
   return (
     <button
-      className={`rounded-lg py-2 px-4 bg-blue-400 text-white text-center ${className}`}
+      className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${className}`}
       {...args}
     >
       {children}

@@ -24,9 +24,24 @@ const ProductDetail = async ({ slug }) => {
       <div className="p-4 md:w-1/2 flex flex-col justify-center">
         <h3 className="text-gray-900 font-semibold text-lg">{item.title}</h3>
 
-        <p className="text-gray-500 mt-2">{item.description}</p>
+        <p className="text-gray-500 mt-2">
+          <em>[ Categoría: {item.category} ] </em>
+          {item.description}
+        </p>
         <p className="text-blue-500 text-3xl font-heading font-medium">
-          ${item.price}
+          {Number(item.price).toLocaleString("es-AR", {
+            style: "currency",
+            currency: "ARS",
+          })}
+        </p>
+        <p className="text-sm text-gray-500">
+          {item.stock > 0 ? (
+            <span className="text-green-500">
+              (Sólo quedan {item.stock} unidades)
+            </span>
+          ) : (
+            ""
+          )}
         </p>
         <QtySelector item={item} />
       </div>

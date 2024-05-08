@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import CartWidget from "./CartWidget";
+import CartBtn from "./CartBtn";
 
 const links = [
   { label: "Inicio", href: "/" },
@@ -83,7 +83,7 @@ export default function NavBar() {
               {link.label}
             </Link>
           ))}
-          <CartWidget />
+          <CartBtn />
         </nav>
       </div>
     </header>
