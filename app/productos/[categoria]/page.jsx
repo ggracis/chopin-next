@@ -23,7 +23,6 @@ const Categoria = ({ params }) => {
   const { categoria } = params;
   return (
     <main className="mb-auto flex flex-col justify-between p-10">
-      <h1>Categoria {categoria}</h1>
       <Suspense fallback={<p>Cargando...</p>}>
         <ProductList categoria={categoria} />
       </Suspense>

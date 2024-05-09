@@ -11,9 +11,12 @@ const DeleteProduct = ({ slug }) => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const response = await fetch(`/api/product/${slug}`, {
-          cache: "no-store",
-        });
+        const response = await fetch(
+          `${process.env.API_URL}/api/product/${slug}`,
+          {
+            cache: "no-store",
+          }
+        );
         const data = await response.json();
         setItem(data);
       } catch (error) {
@@ -25,7 +28,7 @@ const DeleteProduct = ({ slug }) => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`/api/product/${slug}`, {
+      await fetch(`${process.env.API_URL}/api/product/${slug}`, {
         method: "DELETE",
       });
       console.log("Producto eliminado correctamente");

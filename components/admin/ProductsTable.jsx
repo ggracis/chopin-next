@@ -3,7 +3,7 @@ import Boton from "../UI/Boton";
 import Link from "next/link";
 
 const ProductsTable = async () => {
-  const products = await fetch("http://localhost:3000/api/productos/todos", {
+  const products = await fetch(`${process.env.API_URL}/api/productos/todos`, {
     cache: "no-store",
   }).then((res) => res.json());
 
