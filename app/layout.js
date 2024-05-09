@@ -5,6 +5,7 @@ import Footer from "@/components/UI/Footer";
 import { CartProvider } from "@/context/CartContext";
 import CartWidget from "@/components/UI/CartWidget";
 import { AuthProvider } from "@/context/AuthContext";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
