@@ -6,6 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import CartWidget from "@/components/UI/CartWidget";
 import { AuthProvider } from "@/context/AuthContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
